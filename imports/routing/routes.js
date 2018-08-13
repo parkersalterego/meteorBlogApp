@@ -5,6 +5,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 // COMPONENTS
 import Login from '../ui/Login';
 import Register from '../ui/Register';
+import Dashboard from '../ui/Dashboard';
 import NotFound from '../ui/NotFound';
 
 
@@ -22,6 +23,7 @@ export const renderRoutes = () => (
       <Switch>
         <Route exact path="/" component={Login}/>
         <Route exact path="/register" component={Register}/>
+        <Route exact path="/dashboard" component={Dashboard}/>
         <Route path="*" component={NotFound}/>
       </Switch>
     </Router>
