@@ -36,7 +36,7 @@ class NewPost extends Component {
         <FlashMessages ref={(FlashMessages) => {this._FlashMessages = FlashMessages}}/>
         <form onSubmit={this.onFormSubmit.bind(this)}>
             <input type="text" ref="title" placeholder="Title"/>
-            <textarea name="body" ref="body" id="" cols="30" rows="10"></textarea>
+            <textarea name="body" ref="body" cols="30" rows="10"></textarea>
             <button>Submit</button>
         </form>
       </div>
