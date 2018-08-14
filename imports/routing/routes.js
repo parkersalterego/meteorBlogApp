@@ -6,6 +6,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import Login from '../ui/Login';
 import Register from '../ui/Register';
 import Dashboard from '../ui/Dashboard';
+import NewPost from '../ui/NewPost';
 import NotFound from '../ui/NotFound';
 
 
@@ -24,6 +25,7 @@ export const renderRoutes = () => (
         <Route exact path="/" component={Login}/>
         <Route exact path="/register" component={Register}/>
         <Route exact path="/dashboard" component={Dashboard}/>
+        <Route exact path="/newpost" component={NewPost}/>
         <Route path="*" component={NotFound}/>
       </Switch>
     </Router>
