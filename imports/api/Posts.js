@@ -4,8 +4,8 @@ import { Mongo } from 'meteor/mongo';
 export const Posts  = new Mongo.Collection('posts');
 
 if (Meteor.isServer) {
-    Meteor.publish('posts', function() {
-        return Posts.find({});
+    Meteor.publish('posts.findByUser', function() {
+        return Posts.find({userId: this.userId});
     });
 };
 
@@ -17,8 +17,8 @@ Meteor.methods({
             throw new Meteor.Error('Invalid Format, please use plain text');
         } else {
             post.userId = this.userId;
-            post.createdAT = new Date().getTime();
+            post.createdAt = new Date().getTime();
             Posts.insert(post);
         }
-    },
+    }
 });
