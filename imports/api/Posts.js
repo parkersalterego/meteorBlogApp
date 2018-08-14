@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import Post from '../ui/Post';
 
 export const Posts  = new Mongo.Collection('posts');
 
@@ -19,6 +20,13 @@ Meteor.methods({
             post.userId = this.userId;
             post.createdAt = new Date().getTime();
             Posts.insert(post);
+        }
+    },
+    'posts.findById'(id) {
+        if (!this.userId) {
+            throw new Meteor.Error('Not-Authorized');
+        } else {
+            return Posts.findOne({_id: id});
         }
     }
 });
