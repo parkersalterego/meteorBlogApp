@@ -7,6 +7,7 @@ import Login from '../ui/Login';
 import Register from '../ui/Register';
 import Dashboard from '../ui/Dashboard';
 import NewPost from '../ui/NewPost';
+import Post from '../ui/Post';
 import NotFound from '../ui/NotFound';
 
 
@@ -26,6 +27,7 @@ export const renderRoutes = () => (
         <Route exact path="/register" component={Register}/>
         <Route exact path="/dashboard" component={Dashboard}/>
         <Route exact path="/newpost" component={NewPost}/>
+        <Route exact path="/post/:id" component={Post}/>
         <Route path="*" component={NotFound}/>
       </Switch>
     </Router>

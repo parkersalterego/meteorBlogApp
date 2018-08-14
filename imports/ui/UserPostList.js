@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 import { Posts } from '../api/Posts';
+import history from '../routing/history';
 
 class UserPostsList extends Component {
 
@@ -28,7 +29,7 @@ class UserPostsList extends Component {
 
     viewPost(id) {
         Session.set('postId', id);
-        history.pushState('/post');
+        history.push(`/post/${id}`);
     }
 
     renderPostList() {
