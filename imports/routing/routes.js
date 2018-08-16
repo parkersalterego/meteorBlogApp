@@ -10,14 +10,21 @@ import NewPost from '../ui/NewPost';
 import Post from '../ui/Post';
 import NotFound from '../ui/NotFound';
 
+// authenticated page redirects
+const unauthenticatedPages = ['/', '/register'];
+const authenticatedPages = ['/dashboard', '/newpost', '/post/:id'];
 
-// AUTHENTICATED PAGE REDIRECTS
-// const pathname = createBrowserHistory().location.pathname;
-// const isUnauthenticatedPages = ['/', '/register'];
-// const isAuthenticatedPage = [];
+export const onAuthChange = (isAuthenticated) => {
+  const pathname = history.location.pathname;
+  const isUnauthenticatedPage = unauthenticatedPages.includes(pathname);
+  const isAuthenticatedPage = authenticatedPages.includes(pathname);
 
-// export const onAuthChange = (isAuthenticated) => {
-// };
+  if (isUnauthenticatedPage && isAuthenticated) {
+    history.push('/dashboard');
+  } else if (isAuthenticatedPage && !isAuthenticated) {
+    history.push('/');
+  }
+}
 
 // ROUTES
 export const renderRoutes = () => (

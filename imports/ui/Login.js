@@ -16,19 +16,21 @@ class Login extends Component {
                         : null;
     }
 
-    onSubmit(e) {
+    onFormSubmit(e) {
         e.preventDefault();
 
-        const email = this.refs.email;
-        const password = this.refs.password;
+        const email = this.refs.email.value;
+        const password = this.refs.password.value;
 
         Meteor.loginWithPassword({email}, password, (err) => {
-            err ? this._FlashMessages.message('error', 'Unable to login, please ensure that your email and password are entered correctly.', 2000)
-                : (this._FlashMessages.message('success', 'Logged In Successfully', 2000, () => {
+            if (err) {
+                this._FlashMessages.message('error', 'Unable to login, please check that your email and password are spelled correctly', 2000);
+            } else {
+                this._FlashMessages.message('success', 'Logged In', 2000, () => {
                     history.push('/dashboard');
-                }));
+                });
+            }
         });
-
     }
 
     render() {
@@ -36,7 +38,7 @@ class Login extends Component {
         <div>
             <h1>Login</h1>
             <FlashMessages ref={(FlashMessages) => {this._FlashMessages = FlashMessages}}/>
-            <form onSubmit={this.onFormSubmit}>
+            <form onSubmit={this.onFormSubmit.bind(this)}>
                 <input type="email" ref="email" placeholder="Email"/>
                 <input type="password" ref="password" placeholder="Password"/>
                 <button>Login</button>
