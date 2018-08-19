@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import Post from '../ui/Post';
 
 export const Posts  = new Mongo.Collection('posts');
 
@@ -27,6 +26,24 @@ Meteor.methods({
             throw new Meteor.Error('Not-Authorized');
         } else {
             return Posts.findOne({_id: id});
+        }
+    },
+    async 'posts.updateOne'(id, title, body) {
+        if (!this.userId) {
+            throw new Meteor.Error('Not-Authorized');
+        } else if (typeof(title) !== 'string' || typeof(body) !== 'string') {
+            throw new Meteor.Error(400, 'Invalid data type');
+        } else {
+            await Posts.update({_id: id}, {$set: {title: title, body: body}});
+            return Posts.findOne({_id: id});
+        }
+    },
+    async 'posts.deleteOne'(id) {
+        if (!this.userId) {
+            throw new Meteor.Error('Not-Authorized');
+        } else {
+            const deletePost = await Posts.remove(id);
+            return deletePost;
         }
     }
 });
