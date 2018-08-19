@@ -8,7 +8,6 @@ const Dashboard = () => {
         <div>
             <NavBar/>
             <p>Dashboard</p>
-            <UserPostsList/>
         </div>
     )
 }

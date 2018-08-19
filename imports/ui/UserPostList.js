@@ -4,6 +4,7 @@ import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 import { Posts } from '../api/Posts';
 import history from '../routing/history';
+import moment from 'moment';
 
 class UserPostsList extends Component {
 
@@ -41,7 +42,7 @@ class UserPostsList extends Component {
                 return (
                     <div className="post" key={index}>
                         <h2 className="post__title">{post.title}</h2>
-                        <p className="post__created">{post.createdAt}</p>
+                        <p className="post__created">{moment(post.createdAt).format('MMMM Do, YYYY')}</p>
                         <button onClick={this.viewPost.bind(this, post._id)}>View Post</button>
                     </div>
                 )

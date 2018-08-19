@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import  { Link } from 'react-router-dom';
 import history from '../routing/history';
 import FlashMessages from './FlashMessages';
+import { Accounts } from 'meteor/accounts-base';
 
 class Register extends Component {
 
@@ -9,6 +10,7 @@ class Register extends Component {
         super(props);
 
         this.state = {
+            username: false,
             email: false,
             passwordMatch: false,
             timeout: '',
@@ -44,20 +46,40 @@ class Register extends Component {
                 !this.refs.email.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/)
                 ? (this._FlashMessages.message('error', 'Invalid email address please be sure that you have typed it correctly', 2000), this.setState({email: false}))
                 : this.setState({email: true});
-            }, 500)
+            }, 750)
+        })
+    }
+
+    evalUsername() {
+        clearTimeout(this.state.timeout);
+
+        this.setState({
+            timeout: setTimeout(() => {
+                Meteor.call('users.findUserByUsername', this.refs.username.value, (err, res) => {
+                    if (err) {
+                        this._FlashMessages.message('error', err.reason, 2000);
+                        this.setState({username: false});
+                    } else {
+                        res ? (this._FlashMessages.message('error', `The username ${this.refs.username.value} is already taken`, 2000),
+                                this.setState({username: false}))
+                            : (this.setState({username: true}), console.log(this.state.username));
+                    }
+                });
+            }, 750)
         })
     }
 
     onFormSubmit(e) {
         e.preventDefault();
 
+        const username = this.refs.username.value.trim();
         const password = this.refs.password.value.trim();
         const email = this.refs.email.value.trim();
 
-        if (!this.state.email || !this.state.passwordMatch) {
+        if (!this.state.email || !this.state.passwordMatch || !this.state.username) { 
             this._FlashMessages.message('error', 'Please fill out all fields', 2000);
         } else {
-            Accounts.createUser({email, password}, (err) => {
+            Accounts.createUser({username, email, password}, (err) => {
                 err ? this._FlashMessages.message('error', err.reason, 2000)
                     : this._FlashMessages.message('success', 'Account Created', 2000, () => {
                         history.push('/dashboard');
@@ -72,6 +94,12 @@ class Register extends Component {
         <h1>Register</h1>
         <FlashMessages ref={(FlashMessages) => {this._FlashMessages = FlashMessages}}/>
         <form onSubmit={this.onFormSubmit.bind(this)}>
+            <input 
+                onKeyUp={this.evalUsername.bind(this)}
+                type="text" 
+                ref="username" 
+                name="username" 
+                placeholder="username" />
             <input 
                 onKeyUp={this.evalEmail.bind(this)}
                 type="email"

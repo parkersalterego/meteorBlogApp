@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { Meteor } from 'meteor/meteor';
 import FlashMessages from './FlashMessages';
 import history from '../routing/history';
+import moment from 'moment';
 
 class Post extends Component {
 
@@ -44,9 +45,7 @@ class Post extends Component {
                     this._FlashMessages.message('error', err.reason, 2000);
                 } else {
                     this._FlashMessages.message('success', 'Post Updated', 1500, () => {
-                        console.log(res);
-                        this.setState({edit: false, post: res});
-                        console.log(this.state.post);
+                        history.push('/yourposts');
                     });
                 }
             });
@@ -62,7 +61,7 @@ class Post extends Component {
                     this._FlashMessages.message('error', err.reason, 2000);
                 } else {
                     this._FlashMessages.message('success', 'Post Deleted', 1500, () => {
-                        history.push('/dashboard');
+                        history.push('/yourposts');
                     });
                 }
             });
@@ -77,7 +76,7 @@ class Post extends Component {
                     <button onClick={() => this.setState({edit: true})}>Edit</button>
                     <button onClick={this.deletePost.bind(this)}>Delete</button>
                     {/* use moment js below */}
-                    <p className="post__created-at">{this.state.post.createdAt}</p>
+                    <p className="post__created-at">{moment(this.state.post.createdAt).format('MMMM Do, YYYY')}</p>
                     <br/>
                     <p className="post__body" ref="postBody">{this.state.post.body}</p>
                 </div>
