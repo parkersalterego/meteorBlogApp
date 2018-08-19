@@ -45,9 +45,7 @@ class Post extends Component {
                     this._FlashMessages.message('error', err.reason, 2000);
                 } else {
                     this._FlashMessages.message('success', 'Post Updated', 1500, () => {
-                        console.log(res);
-                        this.setState({edit: false, post: res});
-                        console.log(this.state.post);
+                        history.push('/yourposts');
                     });
                 }
             });
@@ -63,7 +61,7 @@ class Post extends Component {
                     this._FlashMessages.message('error', err.reason, 2000);
                 } else {
                     this._FlashMessages.message('success', 'Post Deleted', 1500, () => {
-                        history.push('/dashboard');
+                        history.push('/yourposts');
                     });
                 }
             });

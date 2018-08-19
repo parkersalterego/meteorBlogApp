@@ -8,6 +8,7 @@ import Register from '../ui/Register';
 import Dashboard from '../ui/Dashboard';
 import NewPost from '../ui/NewPost';
 import Post from '../ui/Post';
+import UserPostList from '../ui/UserPostList';
 import NotFound from '../ui/NotFound';
 
 // authenticated page redirects
@@ -33,6 +34,7 @@ export const renderRoutes = () => (
         <Route exact path="/" component={Login}/>
         <Route exact path="/register" component={Register}/>
         <Route exact path="/dashboard" component={Dashboard}/>
+        <Route exact path="/yourposts" component={UserPostList}/>
         <Route exact path="/newpost" component={NewPost}/>
         <Route exact path="/post/:id" component={Post}/>
         <Route path="*" component={NotFound}/>
